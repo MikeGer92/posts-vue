@@ -19,7 +19,8 @@ export default {
       showLoader: false,
       postsColumns: ['id', 'title', 'body', 'detail'],
       userId: this.$route.params.id,
-      userPosts: []
+      userPosts: [],
+      errors: []
     }
   },
   beforeMount() {
@@ -40,7 +41,7 @@ export default {
         })
           this.userPosts = response.data
       } catch (e) {
-        console.log(e)
+        this.errors.push(e)
       }
     }
     },

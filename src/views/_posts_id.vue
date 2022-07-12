@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios';
+// import {onErrorCaptured, ref} from "vue";
 import { mapActions, mapGetters } from 'vuex';
 import CommentsTable from '@/components/Comment/CommentsTable.vue'
 import ModalComment from '@/components/ModalComment.vue'
@@ -51,7 +52,8 @@ export default {
       showModal: false,
       addBtn: false,
       editBtn: false,
-      deleteBtn: false
+      deleteBtn: false,
+      errors: []
     }
   },
   beforeMount() {
@@ -62,7 +64,7 @@ export default {
     this.getAllComments()
   },
   computed: {
-    ...mapGetters(['USERS'])
+    ...mapGetters(['USERS', 'ERRORS'])
   },
   methods: {
     ...mapActions(['GET_USERS']),
@@ -73,7 +75,7 @@ export default {
         })
           this.postComments = response.data
       } catch (e) {
-        console.log(e)
+        this.errors.push(e)
       }
     },
     async getAllComments() {
@@ -84,7 +86,7 @@ export default {
           this.allComments = response.data
           this.newComId = String(this.allComments.length + 1)
       } catch (e) {
-        console.log(e)
+        this.errors.push(e)
       }
     },
     addComment(body) {
@@ -100,7 +102,7 @@ export default {
           // console.log(this.allComments[500])
           this.showModal = false
       } catch (e) {
-        console.log(e)
+        this.errors.push(e)
       }
     },
     editModal(id) {
@@ -109,22 +111,23 @@ export default {
       this.showModal = true
       this.editBtn = true
       this.editingComment = this.postComments.find(item => item.id === id)
-      console.log(this.editingComment)
     },
     editComment(body) {
       try {
         fetch(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}` ,{
-          method: 'POST',
+          method: 'PUT',
           body: JSON.stringify({...body}),
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
             },
         })
         this.editingComment = {...body}
-        console.log(this.editingComment)
         this.showModal = false
       } catch (e) {
-        console.log(e)
+        this.errors.push(e)
+        // console.log(this.errors)
+        
+
       }
     },
     delModal(id) {
@@ -142,9 +145,17 @@ export default {
       this.postComments = this.postComments.filter(item => item.id != body.id)
       this.showModal = false
       } catch (e) {
-        console.log(e)
+        this.errors.push(e)
       }
-    }
+    },
+    // setup(){
+    //   let errors = ref(null)
+    //   onErrorCaptured((error)=>{
+    //      // checking for server response first
+    //      errors.value = error.response?Object.values(error.response.data)[0]:error.message
+    //     })
+    //   return{errors}
+    // }
   },
 }
 </script>

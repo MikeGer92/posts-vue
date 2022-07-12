@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    users: []
+    users: [],
+    errors: []
   },
   actions: {
     async GET_USERS({commit}) {
@@ -20,11 +21,17 @@ const store = new Vuex.Store({
   mutations: {
     SET_USERS: (state, users) => {
       state.users = users;
+    },
+    SET_ERRORS: (state, errors) => {
+      state.errors = errors;
     }
   },
   getters: {
     USERS(state) {
       return state.users;
+    },
+    ERRORS(state) {
+      return state.errors;
     }
   }
 });
