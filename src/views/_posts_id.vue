@@ -74,8 +74,9 @@ export default {
           method: 'GET'
         })
           this.postComments = response.data
+          console.log(response.status)
       } catch (e) {
-        this.errors.push(e)
+        this.$store.commit('SET_ERRORS', e)
       }
     },
     async getAllComments() {
@@ -85,8 +86,10 @@ export default {
         })
           this.allComments = response.data
           this.newComId = String(this.allComments.length + 1)
+          console.log(response.status)
       } catch (e) {
-        this.errors.push(e)
+        
+        this.$store.commit('SET_ERRORS', e)
       }
     },
     addComment(body) {
@@ -97,12 +100,14 @@ export default {
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
             },
-        })
+          })
+          console.log(Promise)
           this.postComments.push({...body})
-          // console.log(this.allComments[500])
+          this.allComments.push({...body})
+          console.log(this.allComments.length)
           this.showModal = false
       } catch (e) {
-        this.errors.push(e)
+        this.$store.commit('SET_ERRORS', e)
       }
     },
     editModal(id) {
@@ -115,7 +120,7 @@ export default {
     editComment(body) {
       try {
         fetch(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}` ,{
-          method: 'PUT',
+          method: 'POST',
           body: JSON.stringify({...body}),
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
@@ -124,8 +129,7 @@ export default {
         this.editingComment = {...body}
         this.showModal = false
       } catch (e) {
-        this.errors.push(e)
-        // console.log(this.errors)
+        this.$store.commit('SET_ERRORS', e)
         
 
       }
@@ -145,17 +149,9 @@ export default {
       this.postComments = this.postComments.filter(item => item.id != body.id)
       this.showModal = false
       } catch (e) {
-        this.errors.push(e)
+        this.$store.commit('SET_ERRORS', e)
       }
     },
-    // setup(){
-    //   let errors = ref(null)
-    //   onErrorCaptured((error)=>{
-    //      // checking for server response first
-    //      errors.value = error.response?Object.values(error.response.data)[0]:error.message
-    //     })
-    //   return{errors}
-    // }
   },
 }
 </script>
