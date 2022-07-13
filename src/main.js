@@ -1,16 +1,12 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 import router from './router';
 import store from './store/store';
 
 
-// Vue.config.errorHandler = (err, vm, info) => {
-//   alert(`Error: ${err.toString()}\nInfo: ${info}`);
-// };
 Vue.config.productionTip = false;
-
 new Vue({
   router,
   render: h => h(App),
   store
-}).$mount('#app')
+}).$mount('#app');
