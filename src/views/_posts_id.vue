@@ -76,6 +76,7 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
+            alert('Ошибка запроса. Проверьте данные запроса!')
             
           } else if (err.request) { 
             console.log(err)
@@ -96,6 +97,7 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
+            alert('Ошибка запроса. Проверьте данные запроса!')
             
           } else if (err.request) { 
             console.log(err)
@@ -118,6 +120,7 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
+            alert('Ошибка запроса. Проверьте данные запроса!')
             
           } else if (err.request) { 
             console.log(err)
@@ -146,6 +149,7 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
+            alert('Ошибка запроса. Проверьте данные запроса!')
             
           } else if (err.request) { 
             console.log(err)
@@ -174,6 +178,7 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
+            alert('Ошибка запроса. Проверьте данные запроса!')
             
           } else if (err.request) { 
             console.log(err)
