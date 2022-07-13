@@ -69,46 +69,64 @@ export default {
   methods: {
     ...mapActions(['GET_USERS']),
     async getPostComments() {
-      try {
-        const response = await axios(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}` ,        {
-          method: 'GET'
+      await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}`)
+        .then(res => { 
+          this.postComments = res.data
         })
-          this.postComments = response.data
-          console.log(response.status)
-      } catch (e) {
-        this.$store.commit('SET_ERRORS', e)
-      }
+        .catch(err => { 
+          if (err.response) { 
+            console.log(err.message)
+            
+          } else if (err.request) { 
+            console.log(err)
+          } else { 
+            console.log(err)
+          }
+          this.$store.commit('SET_ERRORS', err) 
+        }
+      )
     },
     async getAllComments() {
-      try {
-        const response = await axios(`https://jsonplaceholder.typicode.com/comments` ,{
-          method: 'GET'
-        })
-          this.allComments = response.data
+      await axios.get('https://jsonplaceholder.typicode.com/comments')
+        .then(res => { 
+          this.allComments = res.data
           this.newComId = String(this.allComments.length + 1)
-          console.log(response.status)
-      } catch (e) {
-        
-        this.$store.commit('SET_ERRORS', e)
-      }
+
+        })
+        .catch(err => { 
+          if (err.response) { 
+            console.log(err.message)
+            
+          } else if (err.request) { 
+            console.log(err)
+          } else { 
+            console.log(err)
+          }
+          this.$store.commit('SET_ERRORS', err) 
+        }
+      )
     },
     addComment(body) {
-      try {
-        axios(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}` ,{
-          method: 'POST',
-          body: JSON.stringify({...body}),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-          })
-          console.log(Promise)
+      axios.post(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}`, JSON.stringify({...body}))
+        .then(res => { 
+          console.log(res)
           this.postComments.push({...body})
           this.allComments.push({...body})
           console.log(this.allComments.length)
           this.showModal = false
-      } catch (e) {
-        this.$store.commit('SET_ERRORS', e)
-      }
+        })
+        .catch(err => { 
+          if (err.response) { 
+            console.log(err.message)
+            
+          } else if (err.request) { 
+            console.log(err)
+          } else { 
+            console.log(err)
+          }
+          this.$store.commit('SET_ERRORS', err) 
+          this.showModal = false 
+        })
     },
     editModal(id) {
       this.addBtn = false
@@ -118,21 +136,25 @@ export default {
       this.editingComment = this.postComments.find(item => item.id === id)
     },
     editComment(body) {
-      try {
-        fetch(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}` ,{
-          method: 'POST',
-          body: JSON.stringify({...body}),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
+      axios.post(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}`, JSON.stringify({...body}))
+        .then(res => { 
+          console.log(res)
+          this.editingComment = {...body}
+          this.showModal = false 
+        }
+        )
+        .catch(err => { 
+          if (err.response) { 
+            console.log(err.message)
+            
+          } else if (err.request) { 
+            console.log(err)
+          } else { 
+            console.log(err)
+          }
+          this.$store.commit('SET_ERRORS', err) 
+          this.showModal = false 
         })
-        this.editingComment = {...body}
-        this.showModal = false
-      } catch (e) {
-        this.$store.commit('SET_ERRORS', e)
-        
-
-      }
     },
     delModal(id) {
       this.addBtn = false
@@ -142,15 +164,25 @@ export default {
       this.editingComment = this.postComments.find(item => item.id === id)
     },
     deleteComment(body) {
-      try {
-        fetch(`https://jsonplaceholder.typicode.com/comments/${body.id}` ,{
-          method: 'DELETE',
+      axios.delete(`https://jsonplaceholder.typicode.com/comments/${body.id}`)
+        .then(res => { 
+          console.log(res)
+          this.postComments = this.postComments.filter(item => item.id != body.id)
+          this.showModal = false
+        }
+        )
+        .catch(err => { 
+          if (err.response) { 
+            console.log(err.message)
+            
+          } else if (err.request) { 
+            console.log(err)
+          } else { 
+            console.log(err)
+          }
+          this.$store.commit('SET_ERRORS', err) 
+          this.showModal = false 
         })
-      this.postComments = this.postComments.filter(item => item.id != body.id)
-      this.showModal = false
-      } catch (e) {
-        this.$store.commit('SET_ERRORS', e)
-      }
     },
   },
 }

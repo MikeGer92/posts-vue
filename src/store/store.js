@@ -11,11 +11,24 @@ const store = new Vuex.Store({
   },
   actions: {
     async GET_USERS({commit}) {
-      const response = await axios('https://jsonplaceholder.typicode.com/users/',
-        {
-          method: 'GET'
-        });
-      commit('SET_USERS', response.data);
+      await axios.get('https://jsonplaceholder.typicode.com/users/')
+        .then(res => { 
+          console.log(res)
+          commit('SET_USERS', res.data);
+
+        })
+        .catch(err => { 
+          if (err.response) { 
+            console.log(err.message)
+            
+          } else if (err.request) { 
+            console.log(err)
+          } else { 
+            console.log(err)
+          }
+          commit('SET_ERRORS', err) 
+        }
+      )
     }
   },
   mutations: {

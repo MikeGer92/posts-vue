@@ -111,7 +111,7 @@ export default {
       this.$emit('addComm', this.comment)
     },
     editComm() {
-      this.$emit('editComm', this.comment)
+      this.$emit('editComm', this.comData)
     },
     delComm() {
       this.$emit('delComm', this.comData)
