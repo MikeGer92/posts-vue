@@ -76,11 +76,13 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
-            
+            alert('Ошибка ответа сервера. Проверьте данные запроса!')
           } else if (err.request) { 
             console.log(err)
+            alert('Ошибка запроса. Проверьте данные запроса!')
           } else { 
             console.log(err)
+            alert('Что-то пошло не так. Проверьте данные и попробуйте снова!')
           }
           this.$store.commit('SET_ERRORS', err) 
         }
@@ -96,11 +98,13 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
-            
+            alert('Ошибка ответа сервера. Проверьте данные запроса!')
           } else if (err.request) { 
             console.log(err)
+            alert('Ошибка запроса. Проверьте данные запроса!')
           } else { 
             console.log(err)
+            alert('Что-то пошло не так. Проверьте данные и попробуйте снова!')
           }
           this.$store.commit('SET_ERRORS', err) 
         }
@@ -118,11 +122,13 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
-            
+            alert('Ошибка ответа сервера. Проверьте данные запроса!')
           } else if (err.request) { 
             console.log(err)
+            alert('Ошибка запроса. Проверьте данные запроса!')
           } else { 
             console.log(err)
+            alert('Что-то пошло не так. Проверьте данные и попробуйте снова!')
           }
           this.$store.commit('SET_ERRORS', err) 
           this.showModal = false 
@@ -136,7 +142,7 @@ export default {
       this.editingComment = this.postComments.find(item => item.id === id)
     },
     editComment(body) {
-      axios.post(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}`, JSON.stringify({...body}))
+      axios.post(`https://jsonplaceholder.typicode.com/comments?postId`)
         .then(res => { 
           console.log(res)
           this.editingComment = {...body}
@@ -146,11 +152,13 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
-            
+            alert('Ошибка ответа сервера. Проверьте данные запроса!')
           } else if (err.request) { 
             console.log(err)
+            alert('Ошибка запроса. Проверьте данные запроса!')
           } else { 
             console.log(err)
+            alert('Что-то пошло не так. Проверьте данные и попробуйте снова!')
           }
           this.$store.commit('SET_ERRORS', err) 
           this.showModal = false 
@@ -174,11 +182,13 @@ export default {
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
-            
+            alert('Ошибка ответа сервера. Проверьте данные запроса!')
           } else if (err.request) { 
             console.log(err)
+            alert('Ошибка запроса. Проверьте данные запроса!')
           } else { 
             console.log(err)
+            alert('Что-то пошло не так. Проверьте данные и попробуйте снова!')
           }
           this.$store.commit('SET_ERRORS', err) 
           this.showModal = false 

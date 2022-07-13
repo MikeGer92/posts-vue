@@ -20,11 +20,13 @@ const store = new Vuex.Store({
         .catch(err => { 
           if (err.response) { 
             console.log(err.message)
-            
+            alert('Ошибка ответа сервера. Проверьте данные запроса!')
           } else if (err.request) { 
             console.log(err)
+            alert('Ошибка запроса. Проверьте данные запроса!')
           } else { 
             console.log(err)
+            alert('Что-то пошло не так. Проверьте данные и попробуйте снова!')
           }
           commit('SET_ERRORS', err) 
         }
